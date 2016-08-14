@@ -14,7 +14,7 @@ var Hull = function (name, type, mountpoints, space) {
 var transports = {
     //transports
     carrak: new Hull("carrak", "transport", {dorsal: 2}, 38),
-    goliath: new Hull("goliath", "transport", {dorsal: 1, port: 1, starboard: 40}),
+    goliath: new Hull("goliath", "transport", {dorsal: 1, port: 1, starboard: 1}, 40),
     universe: new Hull("universe", "transport", {dorsal: 1, port: 1, starboard: 1}, 94),
     loki: new Hull("loki", "transport", {prow: 1, dorsal: 1}, 45),
     orion: new Hull("orion", "transport", {dorsal: 1, keel: 1}, 40),
