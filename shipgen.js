@@ -20,16 +20,15 @@ var transports = {
     orion: new Hull("orion", "transport", {dorsal: 1, keel: 1}, 40),
     jericho: new Hull("jericho", "transport", {prow: 1, port: 1, starboard: 1}, 45),
     vagabond: new Hull("vagabond", "transport", {prow: 1, dorsal: 1}, 40)
-    //raiders
-    //frigates
-    //light cruisers
-    //cruisers
-    //grand cruisers
-    //battlecruisers
 };
 
 var raiders = {
-
+    meritechshrike: new Hull("meritechshrike", "raider", {prow: 1, dorsal: 1}, 35),
+    iconoclast: new Hull("iconoclast", "raider", {dorsal: 2}, 32),
+    viper: new Hull("viper", "raider", {dorsal: 1}, 29),
+    cobra: new Hull("cobra", "raider", {dorsal: 1, keel: 1}, 35),
+    hazeroth: new Hull("hazeroth", "raider", {prow: 1, dorsal: 1}, 35),
+    havoc: new Hull("havoc", "raider", {prow: 1, dorsal: 1}, 40)
 };
 
 var frigates = {
