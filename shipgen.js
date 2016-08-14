@@ -32,10 +32,19 @@ var raiders = {
 };
 
 var frigates = {
-
+    falchion: new Hull("falchion", "frigate", {prow: 1, dorsal: 2}, 34),
+    claymore: new Hull("claymore", "frigate", {dorsal: 2}, 38),
+    turbulent: new Hull("turbulent", "frigate", {dorsal: 2}, 42),
+    firestorm: new Hull("firestorm", "frigate", {prow: 1, dorsal: 1}, 40),
+    sword: new Hull("sword", "frigate", {dorsal: 2}, 40),
+    tempest: new Hull("tempest", "frigate", {dorsal: 2}, 42)
 };
 
 var lightcruisers = {
+    endeavour: new Hull("endeavour", "lightcruiser", {prow: 2, port: 1, starboard: 1}, 58),
+    defiant: new Hull("defiant", "lightcruiser", {prow: 1, port: 1, starboard: 1}, 55),
+    secutor: new Hull("secutor", "lightcruiser", {prow: 1, port: 1, starboard: 1, dorsal: 1}, 58),
+    lathe: new Hull("lathe", "lightcruiser", {prow: 1, port: 1, starboard: 1}, 60),
     dauntless: new Hull("dauntless", "lightcruiser", {prow: 1, port: 2, starboard: 2}, 60)
 };
 
