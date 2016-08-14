@@ -8,27 +8,85 @@ var Hull = function (name, type, mountpoints, space) {
         starboard: mountpoints.starboard || 0,
         keel: mountpoints.keel || 0
     };
-    this.space = null;
+    this.space = space;
+};
+
+var transports = {
+    //transports
+    carrak: new Hull("carrak", "transport", {dorsal: 2}, 38),
+    goliath: new Hull("goliath", "transport", {dorsal: 1, port: 1, starboard: 40}),
+    universe: new Hull("universe", "transport", {dorsal: 1, port: 1, starboard: 1}, 94),
+    loki: new Hull("loki", "transport", {prow: 1, dorsal: 1}, 45),
+    orion: new Hull("orion", "transport", {dorsal: 1, keel: 1}, 40),
+    jericho: new Hull("jericho", "transport", {prow: 1, port: 1, starboard: 1}, 45),
+    vagabond: new Hull("vagabond", "transport", {prow: 1, dorsal: 1}, 40)
+    //raiders
+    //frigates
+    //light cruisers
+    //cruisers
+    //grand cruisers
+    //battlecruisers
+};
+
+var raiders = {
+
+};
+
+var frigates = {
+
+};
+
+var lightcruisers = {
+    dauntless: new Hull("dauntless", "lightcruiser", {prow: 1, port: 2, starboard: 2}, 60)
+};
+
+var cruisers = {
+
+};
+
+var grandcruisers = {
+
+};
+
+var battlecruisers = {
+
 };
 
 var hulls = {
-    //dauntless: "Dauntless"
-    dauntless: new Hull("Dauntless", "Light Cruiser", {prow: 1, port: 2, starboard: 2}, 50)
+    transports: transports,
+    raiders: raiders,
+    frigates: frigates,
+    lightcruisers: lightcruisers,
+    cruisers: cruisers,
+    grandcruisers: grandcruisers,
+    battlecruisers: battlecruisers
 };
 
-var Ship = function (name, type, hull) {
+var Ship = function (name, hull) {
     this.name = name;
-    this.type = type;
-    this.hull = hulls[hull];
+    this.hull = hull;
     this.essential = null;
     this.supplementary = null;
     this.power_used = null;
     this.space_used = null;
 };
 
+var randomProperty = function (obj) {
+    var keys = Object.keys(obj);
+    return obj[keys[Math.floor(keys.length * Math.random())]];
+};
+
 //testing class linkage
-var test = new Ship("Mordacity", "Light Cruiser", "dauntless");
-console.log("Created the " + test.name + " a " + test.hull.name + " class " + test.type);
+var randomhull = randomProperty(transports);
+var str = JSON.stringify(hulls, null, 4);
+console.log(str);
+
+var test = new Ship("Mordacity", randomhull);
+var str = JSON.stringify(test, null, 4);
+console.log(str);
+
+
+console.log("Created the " + test.name + " a " + test.hull.name + " class " + test.hull.type);
 console.log("Mountpoints available");
 console.log("prow:" + test.hull.mountpoints.prow);
 console.log("dorsal:" + test.hull.mountpoints.dorsal);
