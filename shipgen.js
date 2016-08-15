@@ -11,6 +11,14 @@ var Hull = function (name, type, mountpoints, space) {
     this.space = space;
 };
 
+var Component = function (name, description, type, power, space) {
+    this.name = name;
+    this.description = description;
+    this.type = type;
+    this.power = power || 0;
+    this.space = space || 0;
+};
+
 var transports = {
     carrak: new Hull("carrak", "transport", {dorsal: 2}, 38),
     goliath: new Hull("goliath", "transport", {dorsal: 1, port: 1, starboard: 1}, 40),
@@ -79,7 +87,32 @@ var hulls = {
 };
 
 var transport_essentials = {
+    drive: {
+        lathe2a: new Component("lathe2a", "Lathe-pattern Class 2a Drive", "drive", "40", "14"),
+        jovian1: new Component("jovian1", "Jovian-pattern Class 1 Drive", "drive", "35", "8"),
+        lathe1: new Component("lathe1", "Lathe-pattern Class 1 Drive", "drive", "40", "12")
+    },
+    warp: {
 
+    },
+    bridge: {
+
+    },
+    gellar: {
+
+    },
+    sustainer: {
+
+    },
+    shield: {
+
+    },
+    quarters: {
+
+    },
+    auger: {
+
+    }
 };
 
 var raider_essentials = {
@@ -120,26 +153,59 @@ var components = {
     essential: essentials
 };
 
-var Ship = function (name, hull) {
+var Ship = function (name, type, hull) {
     this.name = name;
     this.hull = hull;
-    this.essential = null;
+    this.essential = {
+        drive: null,
+        warp: null,
+        bridge: null,
+        gellar: null,
+        sustainer: null,
+        shield: null,
+        quarters: null,
+        auger: null
+    };
     this.supplementary = null;
-    this.power_used = null;
-    this.space_used = null;
+    this.power_available = 0;
+    this.space_available = hull.space;
 };
 
-var select_random = function (obj) {
+var return_random = function (obj) {
     var keys = Object.keys(obj);
     return obj[keys[Math.floor(keys.length * Math.random())]];
 };
 
+var select_random = function (obj) {
+    var keys = Object.keys(obj);
+    return keys[Math.floor(keys.length * Math.random())];
+};
+
+var build_ship = function (requirements) {
+    this.name = requirements.name || null;
+    this.type = requirements.type || null;
+    this.hull = requirements.hull || null;
+
+    if (!requirements.name) {
+        requirements.name = "Mordacity";
+    }
+    if (!requirements.type) {
+        requirements.type = select_random(hulls);
+    }
+    if (!requirements.hull) {
+        requirements.hull = return_random(hulls[requirements.type]);
+    } else {
+        requirements.hull = hulls[requirements.type][requirements.hull];
+    }
+    var ship = new Ship(requirements.name, requirements.type, requirements.hull);
+    return ship;
+};
+
 //testing class linkage
-var randomhull = select_random(hulls.transport);
 var str = JSON.stringify(hulls, null, 4);
 console.log(str);
 
-var test = new Ship("Mordacity", randomhull);
+var test = build_ship({name: null, type: "transport", hull: null});
 var str = JSON.stringify(test, null, 4);
 console.log(str);
 
