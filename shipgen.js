@@ -113,16 +113,32 @@ var transport_essentials = {
         mezoa: new Component("mezoa", "Mezoa Gellar Void Integrant", "gellar", 0, 0)
     },
     sustainer: {
-
+        clemency: new Component("clemency", "Clemency-pattern Life Sustainer", "sustainer", 4, 4),
+        euphoric: new Component("euphoric", "Euphoric Life Sustainer", "sustainer", 4, 2),
+        m1r: new Component("m1r", "M-1.r Life Sustainer", "sustainer", 3, 1),
+        vitae: new Component("vitae", "Vitae-pattern Life Sustainer", "sustainer", 4, 2)
     },
     shield: {
-
+        voss: new Component("voss", "Voss Glimmer-pattern Void Shield Array", "shield", 3, 1),
+        repulsor: new Component("repulsor", "Repulsor Shield", "shield", 6, 1),
+        single: new Component("single", "Single Void Shield Array", "shield", 5, 1)
     },
     quarters: {
-
+        bilge: new Component("bilge", "Bilge Rat Quarters", "quarters", 1, 2),
+        clan: new Component("clan", "Clan-kin Quarters", "quarters", 1, 4),
+        cold: new Component("cold", "Cold Quarters", "quarters", 3, 4),
+        slave: new Component("slave", "Slave Quarters", "quarters", 1, 1),
+        pressed: new Component("pressed", "Pressed-crew Quarters", "quarters", 1, 2),
+        voidsmen: new Component("voidsmen", "Voidsmen Quarters", "quarters", 1, 3)
     },
     auger: {
-
+        bg15: new Component("bg15", "BG-15 Assault Scanners", "auger", 5, 0),
+        x470: new Component("x470", "X-470 Ultimo Array", "auger", 6, 0),
+        w240: new Component("w240", "W-240 Passive Detection Arrays", "auger", 3, 0),
+        m100: new Component("m100", "M-100 Auger Array", "auger", 3, 0),
+        m201: new Component("m201", "M-201.b Auger Array", "auger", 5, 0),
+        r50: new Component("r50", "R-50 Auspex Multi-band", "auger", 4, 0),
+        deep: new Component("deep", "Deep Void Auger Array", "auger", 7, 0)
     }
 };
 
@@ -178,6 +194,7 @@ var Ship = function (name, type, hull) {
         auger: null
     };
     this.supplementary = null;
+    this.mounted = null;
     this.power_available = 0;
     this.space_available = hull.space;
 };
@@ -228,8 +245,26 @@ var build_ship = function (requirements) {
     ship.space_available -= ship.essential.drive.space;
 
     ship.essential.warp = select_essential(requirements.type, "warp", ship.power_available, ship.space_available);
+    ship.power_available -= ship.essential.warp.power;
+    ship.space_available -= ship.essential.warp.space;
     ship.essential.bridge = select_essential(requirements.type, "bridge", ship.power_available, ship.space_available);
+    ship.power_available -= ship.essential.bridge.power;
+    ship.space_available -= ship.essential.bridge.space;
     ship.essential.gellar = select_essential(requirements.type, "gellar", ship.power_available, ship.space_available);
+    ship.power_available -= ship.essential.gellar.power;
+    ship.space_available -= ship.essential.gellar.space;
+    ship.essential.sustainer = select_essential(requirements.type, "sustainer", ship.power_available, ship.space_available);
+    ship.power_available -= ship.essential.sustainer.power;
+    ship.space_available -= ship.essential.sustainer.space;
+    ship.essential.shield = select_essential(requirements.type, "shield", ship.power_available, ship.space_available);
+    ship.power_available -= ship.essential.shield.power;
+    ship.space_available -= ship.essential.shield.space;
+    ship.essential.quarters = select_essential(requirements.type, "quarters", ship.power_available, ship.space_available);
+    ship.power_available -= ship.essential.quarters.power;
+    ship.space_available -= ship.essential.quarters.space;
+    ship.essential.auger = select_essential(requirements.type, "auger", ship.power_available, ship.space_available);
+    ship.power_available -= ship.essential.auger.power;
+    ship.space_available -= ship.essential.auger.space;
 
     return ship;
 };
