@@ -100,10 +100,17 @@ var transport_essentials = {
         strelov: new Component("strelov", "Strelov 1 Warp Engine", "warp", 10, 10)
     },
     bridge: {
-
+        smuggler: new Component("smuggler", "Smuggler's Bridge", "bridge", 1, 1),
+        commerce: new Component("commerce", "Commerce Bridge", "bridge", 1, 1),
+        explorer: new Component("explorer", "Exploration Bridge", "bridge", 4, 1),
+        combat: new Component("combat", "Combat Bridge", "bridge", 1, 1)
     },
     gellar: {
-
+        belecane: new Component("belecane", "Belecane-pattern 90.r Gellar Field", "gellar", 1, 0),
+        emergency: new Component("emergency", "Emergency Gellar Field", "gellar", 2, 0),
+        standard: new Component("standard", "Gellar Field", "gellar", 1, 0),
+        warpsbane: new Component("warpsbane", "Warpsbane Hull", "gellar", 1, 0),
+        mezoa: new Component("mezoa", "Mezoa Gellar Void Integrant", "gellar", 0, 0)
     },
     sustainer: {
 
@@ -221,6 +228,8 @@ var build_ship = function (requirements) {
     ship.space_available -= ship.essential.drive.space;
 
     ship.essential.warp = select_essential(requirements.type, "warp", ship.power_available, ship.space_available);
+    ship.essential.bridge = select_essential(requirements.type, "bridge", ship.power_available, ship.space_available);
+    ship.essential.gellar = select_essential(requirements.type, "gellar", ship.power_available, ship.space_available);
 
     return ship;
 };
