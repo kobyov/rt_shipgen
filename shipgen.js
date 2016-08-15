@@ -93,7 +93,11 @@ var transport_essentials = {
         lathe1: new Component("lathe1", "Lathe-pattern Class 1 Drive", "drive", 40, 12)
     },
     warp: {
-
+        miroslav: new Component("miroslav", "Miroslav G-616.b Warp Engine", "warp", 8, 10),
+        markov: new Component("markov", "Markov 1 Warp Engine", "warp", 12, 12),
+        albanov: new Component("albanov", "Albanov 1 Warp Engine", "warp", 10, 11),
+        klenova: new Component("klenova", "Klenova Class M Warp Engine", "warp", 10, 10),
+        strelov: new Component("strelov", "Strelov 1 Warp Engine", "warp", 10, 10)
     },
     bridge: {
 
@@ -181,6 +185,19 @@ var select_random = function (obj) {
     return keys[Math.floor(keys.length * Math.random())];
 };
 
+var select_drive = function (type) {
+    return return_random(components.essential[type].drive);
+};
+
+var select_essential = function (ship_type, component_type, available_power, available_space) {
+    var component = return_random(components.essential[ship_type][component_type]);
+    if (component.power <= available_power && component.space <= available_space) {
+        return component;
+    } else {
+        return select_essential(ship_type, component_type, available_power, available_space);
+    }
+};
+
 var build_ship = function (requirements) {
     this.name = requirements.name || null;
     this.type = requirements.type || null;
@@ -199,9 +216,12 @@ var build_ship = function (requirements) {
     }
     var ship = new Ship(requirements.name, requirements.type, requirements.hull);
 
-    ship.essential.drive = return_random(components.essential.transport.drive)
+    ship.essential.drive = select_drive(requirements.type);
     ship.power_available += ship.essential.drive.power;
     ship.space_available -= ship.essential.drive.space;
+
+    ship.essential.warp = select_essential(requirements.type, "warp", ship.power_available, ship.space_available);
+
     return ship;
 };
 
