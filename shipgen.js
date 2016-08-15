@@ -12,7 +12,6 @@ var Hull = function (name, type, mountpoints, space) {
 };
 
 var transports = {
-    //transports
     carrak: new Hull("carrak", "transport", {dorsal: 2}, 38),
     goliath: new Hull("goliath", "transport", {dorsal: 1, port: 1, starboard: 1}, 40),
     universe: new Hull("universe", "transport", {dorsal: 1, port: 1, starboard: 1}, 94),
@@ -49,15 +48,24 @@ var lightcruisers = {
 };
 
 var cruisers = {
-
+    conquest: new Hull("conquest", "cruiser", {port: 2, starboard: 2}, 56),
+    ambition: new Hull("ambition", "cruiser", {prow: 1, port: 2, starboard: 2}, 75),
+    dictator: new Hull("dictator", "cruiser", {prow: 1, port: 2, starboard: 2}, 65),
+    tyrant: new Hull("tyrant", "cruiser", {prow: 1, port: 2, starboard: 3}, 77),
+    lunar: new Hull("lunar", "cruiser", {prow: 1, port: 2, starboard: 3}, 75)
 };
 
 var grandcruisers = {
-
+    avenger: new Hull("avenger", "grandcruiser", {port: 3, starboard: 3}, 90),
+    repulsive: new Hull("repulsive", "grandcruiser", {prow: 1, port: 2, starboard: 3}, 90),
+    exorcist: new Hull("exorcist", "grandcruiser", {port: 3, starboard: 3}, 80)
 };
 
 var battlecruisers = {
-
+    overlord: new Hull("overlord", "battlecruiser", {prow: 1, port: 2, starboard: 2, dorsal: 1}, 78),
+    mars: new Hull("mars", "battlecruiser", {prow: 1, port: 2, starboard: 2, dorsal: 1}, 54),
+    chalice: new Hull("chalice", "battlecruiser", {prow: 1, port: 2, starboard: 2, dorsal: 1}, 75),
+    armageddon: new Hull("armageddon", "battlecruiser", {prow: 1, port: 2, starboard: 2, dorsal: 1}, 73)
 };
 
 var hulls = {
@@ -79,13 +87,13 @@ var Ship = function (name, hull) {
     this.space_used = null;
 };
 
-var randomProperty = function (obj) {
+var select_random = function (obj) {
     var keys = Object.keys(obj);
     return obj[keys[Math.floor(keys.length * Math.random())]];
 };
 
 //testing class linkage
-var randomhull = randomProperty(transports);
+var randomhull = select_random(transports);
 var str = JSON.stringify(hulls, null, 4);
 console.log(str);
 
