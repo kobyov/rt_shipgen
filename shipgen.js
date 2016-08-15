@@ -88,9 +88,9 @@ var hulls = {
 
 var transport_essentials = {
     drive: {
-        lathe2a: new Component("lathe2a", "Lathe-pattern Class 2a Drive", "drive", "40", "14"),
-        jovian1: new Component("jovian1", "Jovian-pattern Class 1 Drive", "drive", "35", "8"),
-        lathe1: new Component("lathe1", "Lathe-pattern Class 1 Drive", "drive", "40", "12")
+        lathe2a: new Component("lathe2a", "Lathe-pattern Class 2a Drive", "drive", 40, 14),
+        jovian1: new Component("jovian1", "Jovian-pattern Class 1 Drive", "drive", 35, 8),
+        lathe1: new Component("lathe1", "Lathe-pattern Class 1 Drive", "drive", 40, 12)
     },
     warp: {
 
@@ -198,6 +198,10 @@ var build_ship = function (requirements) {
         requirements.hull = hulls[requirements.type][requirements.hull];
     }
     var ship = new Ship(requirements.name, requirements.type, requirements.hull);
+
+    ship.essential.drive = return_random(components.essential.transport.drive)
+    ship.power_available += ship.essential.drive.power;
+    ship.space_available -= ship.essential.drive.space;
     return ship;
 };
 
