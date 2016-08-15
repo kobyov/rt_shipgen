@@ -69,13 +69,55 @@ var battlecruisers = {
 };
 
 var hulls = {
-    transports: transports,
-    raiders: raiders,
-    frigates: frigates,
-    lightcruisers: lightcruisers,
-    cruisers: cruisers,
-    grandcruisers: grandcruisers,
-    battlecruisers: battlecruisers
+    transport: transports,
+    raider: raiders,
+    frigate: frigates,
+    lightcruiser: lightcruisers,
+    cruiser: cruisers,
+    grandcruiser: grandcruisers,
+    battlecruiser: battlecruisers
+};
+
+var transport_essentials = {
+
+};
+
+var raider_essentials = {
+
+};
+
+var frigate_essentials = {
+
+};
+
+var lightcruiser_essentials = {
+
+};
+
+var cruiser_essentials = {
+
+};
+
+var grandcruiser_essentials = {
+
+};
+
+var battlecruiser_essentials = {
+
+};
+
+var essentials = {
+    transport: transport_essentials,
+    raider: raider_essentials,
+    frigate: frigate_essentials,
+    lightcruiser: lightcruiser_essentials,
+    cruiser: lightcruiser_essentials,
+    grandcruiser: grandcruiser_essentials,
+    battlecruiser: battlecruiser_essentials
+};
+
+var components = {
+    essential: essentials
 };
 
 var Ship = function (name, hull) {
@@ -93,7 +135,7 @@ var select_random = function (obj) {
 };
 
 //testing class linkage
-var randomhull = select_random(transports);
+var randomhull = select_random(hulls.transport);
 var str = JSON.stringify(hulls, null, 4);
 console.log(str);
 
