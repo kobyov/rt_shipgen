@@ -129,10 +129,10 @@ components.essential = {
         mezoa: new Component("mezoa", "Mezoa Gellar Void Integrant", "gellar", 0, 0)
     },
     sustainer: {
-        clemency: new Component("clemency", "Clemency-pattern Life Sustainer", "sustainer", 4, 4),
-        euphoric: new Component("euphoric", "Euphoric Life Sustainer", "sustainer", 4, 2),
-        m1r: new Component("m1r", "M-1.r Life Sustainer", "sustainer", 3, 1),
-        vitae: new Component("vitae", "Vitae-pattern Life Sustainer", "sustainer", 4, 2)
+        clemency_s: new Component("clemency_s", "Clemency-pattern Life Sustainer", "sustainer", 4, 4),
+        euphoric_s: new Component("euphoric_s", "Euphoric Life Sustainer", "sustainer", 4, 2),
+        m1r_s: new Component("m1r_s", "M-1.r Life Sustainer", "sustainer", 3, 1),
+        vitae_s: new Component("vitae_s", "Vitae-pattern Life Sustainer", "sustainer", 4, 2)
     },
     shield: {
         voss: new Component("voss", "Voss Glimmer-pattern Void Shield Array", "shield", 3, 1),
@@ -140,12 +140,12 @@ components.essential = {
         single: new Component("single", "Single Void Shield Array", "shield", 5, 1)
     },
     quarters: {
-        bilge: new Component("bilge", "Bilge Rat Quarters", "quarters", 1, 2),
-        clan: new Component("clan", "Clan-kin Quarters", "quarters", 1, 4),
-        cold: new Component("cold", "Cold Quarters", "quarters", 3, 4),
-        slave: new Component("slave", "Slave Quarters", "quarters", 1, 1),
-        pressed: new Component("pressed", "Pressed-crew Quarters", "quarters", 1, 2),
-        voidsmen: new Component("voidsmen", "Voidsmen Quarters", "quarters", 1, 3)
+        bilge_s: new Component("bilge_s", "Bilge Rat Quarters", "quarters", 1, 2),
+        clan_s: new Component("clan_s", "Clan-kin Quarters", "quarters", 1, 4),
+        cold_s: new Component("cold_s", "Cold Quarters", "quarters", 3, 4),
+        slave_s: new Component("slave_s", "Slave Quarters", "quarters", 1, 1),
+        pressed_s: new Component("pressed_s", "Pressed-crew Quarters", "quarters", 1, 2),
+        voidsmen_s: new Component("voidsmen_s", "Voidsmen Quarters", "quarters", 1, 3)
     },
     auger: {
         bg15: new Component("bg15", "BG-15 Assault Scanners", "auger", 5, 0),
@@ -186,10 +186,10 @@ components.transport = {
             mezoa: components.essential.gellar.mezoa
         },
         sustainer: {
-            clemency: components.essential.sustainer.clemency,
-            euphoric: components.essential.sustainer.euphoric,
-            m1r: components.essential.sustainer.m1r,
-            vitae: components.essential.sustainer.vitae
+            clemency_s: components.essential.sustainer.clemency_s,
+            euphoric_s: components.essential.sustainer.euphoric_s,
+            m1r_s: components.essential.sustainer.m1r_s,
+            vitae_s: components.essential.sustainer.vitae_s
         },
         shield: {
             voss: components.essential.shield.voss,
@@ -197,12 +197,12 @@ components.transport = {
             single: components.essential.shield.single
         },
         quarters: {
-            bilge: components.essential.quarters.bilge,
-            clan: components.essential.quarters.clan,
-            cold: components.essential.quarters.cold,
-            slave: components.essential.quarters.slave,
-            pressed: components.essential.quarters.pressed,
-            voidsmen: components.essential.quarters.voidsmen
+            bilge_s: components.essential.quarters.bilge_s,
+            clan_s: components.essential.quarters.clan_s,
+            cold_s: components.essential.quarters.cold_s,
+            slave_s: components.essential.quarters.slave_s,
+            pressed_s: components.essential.quarters.pressed_s,
+            voidsmen_s: components.essential.quarters.voidsmen_s
         },
         auger: {
             bg15: components.essential.auger.bg15,
@@ -223,29 +223,18 @@ components.raider = {
             segrazian: components.essential.drive.segrazian,
             jovian2: components.essential.drive.jovian2
         },
-        warp: {
-            miroslav: components.essential.warp.miroslav,
-            markov: components.essential.warp.markov,
-            albanov: components.essential.warp.albanov,
-            klenova: components.essential.warp.klenova,
-            strelov: components.essential.warp.strelov
-        },
+        warp: components.transport.essential.warp,
         bridge: {
             command: components.essential.bridge.command,
             armoured_s: components.essential.bridge.armoured_s,
             explorer: components.essential.bridge.explorer,
             combat: components.essential.bridge.combat
         },
-        gellar: {
-        },
-        sustainer: {
-        },
-        shield: {
-        },
-        quarters: {
-        },
-        auger: {
-        }
+        gellar: components.transport.essential.gellar,
+        sustainer: components.transport.essential.sustainer,
+        shield: components.transport.essential.shield,
+        quarters: components.transport.essential.quarters,
+        auger: components.transport.essential.auger
     }
 };
 
@@ -392,39 +381,49 @@ var select_essential = function (ship_type, component_type, available_power, ava
     if (component.power <= available_power && component.space <= available_space) {
         return component;
     } else {
-        return select_essential(ship_type, component_type, available_power, available_space);
+        return null;
     }
 };
 
 var build_ship = function (requirements) {
     this.name = requirements.name || null;
     this.type = requirements.type || null;
-    this.hull = requirements.hull || null;
 
     if (!requirements.name) {
-        requirements.name = "Mordacity";
+        this.name = "Mordacity";
     }
     if (!requirements.type) {
-        requirements.type = select_random(hulls);
+        this.type = select_random(hulls);
     }
     if (!requirements.hull) {
-        requirements.hull = return_random(hulls[requirements.type]);
+        this.hull = return_random(hulls[requirements.type]);
     } else {
-        requirements.hull = hulls[requirements.type][requirements.hull];
+        this.hull = hulls[requirements.type][requirements.hull];
     }
-    var ship = new Ship(requirements.name, requirements.type, requirements.hull);
+    var ship = new Ship(this.name, this.type, this.hull);
 
-    var component;
+    var component, lastcomponent, component_attempts = 0;
 
     for (component in ship.essential) {
         if (component === "drive") {
             ship.essential[component] = select_drive(requirements.type);
             ship.power_available += ship.essential[component].power;
         } else {
-            ship.essential[component] = select_essential(requirements.type, component, ship.power_available, ship.space_available);
-            ship.power_available -= ship.essential[component].power;
+            while (ship.essential[component] === null && component_attempts < 20) {
+                ship.essential[component] = select_essential(requirements.type, component, ship.power_available, ship.space_available);
+                component_attempts += 1;
+            }
+            if (ship.essential[component] === null) {
+                console.log("unworkable ship generated, rebuilding")
+                return build_ship(requirements);
+            } else {
+                ship.power_available -= ship.essential[component].power;
+                component_attempts = 0;
+            }
         }
-        ship.space_available -= ship.essential[component].space;
+        if (component !== lastcomponent) {
+            ship.space_available -= ship.essential[component].space;
+        }
     }
     return ship;
 };
@@ -433,7 +432,7 @@ var build_ship = function (requirements) {
 var str = JSON.stringify(hulls, null, 4);
 console.log(str);
 
-var test = build_ship({name: null, type: "transport", hull: null});
+var test = build_ship({name: null, type: "raider", hull: null});
 var str = JSON.stringify(test, null, 4);
 console.log(str);
 
