@@ -101,7 +101,10 @@ components.essential = {
     drive: {
         lathe2a: new Component("lathe2a", "Lathe-pattern Class 2a Drive", "drive", 40, 14),
         jovian1: new Component("jovian1", "Jovian-pattern Class 1 Drive", "drive", 35, 8),
-        lathe1: new Component("lathe1", "Lathe-pattern Class 1 Drive", "drive", 40, 12)
+        lathe1: new Component("lathe1", "Lathe-pattern Class 1 Drive", "drive", 40, 12),
+        lathe2b: new Component("lathe2b", "Lathe-pattern Class 2b Escord Drive", "drive", 47, 15),
+        segrazian: new Component("segrazian", "Segrazian Viperdrive Pirate Engine", "drive", 45, 16),
+        jovian2: new Component("jovian2", "Jovian-pattern Class 2 Drive", "drive", 45, 10)
     },
     warp: {
         miroslav: new Component("miroslav", "Miroslav G-616.b Warp Engine", "warp", 8, 10),
@@ -114,7 +117,9 @@ components.essential = {
         smuggler: new Component("smuggler", "Smuggler's Bridge", "bridge", 1, 1),
         commerce: new Component("commerce", "Commerce Bridge", "bridge", 1, 1),
         explorer: new Component("explorer", "Exploration Bridge", "bridge", 4, 1),
-        combat: new Component("combat", "Combat Bridge", "bridge", 1, 1)
+        combat: new Component("combat", "Combat Bridge", "bridge", 1, 1),
+        command: new Component("command", "Command Bridge", "bridge", 2, 1),
+        armoured_s: new Component("armoured_s", "Armoured Command Bridge", "bridge", 2, 2)
     },
     gellar: {
         belecane: new Component("belecane", "Belecane-pattern 90.r Gellar Field", "gellar", 1, 0),
@@ -214,10 +219,22 @@ components.transport = {
 components.raider = {
     essential : {
         drive: {
+            lathe2b: components.essential.drive.lathe2b,
+            segrazian: components.essential.drive.segrazian,
+            jovian2: components.essential.drive.jovian2
         },
         warp: {
+            miroslav: components.essential.warp.miroslav,
+            markov: components.essential.warp.markov,
+            albanov: components.essential.warp.albanov,
+            klenova: components.essential.warp.klenova,
+            strelov: components.essential.warp.strelov
         },
         bridge: {
+            command: components.essential.bridge.command,
+            armoured_s: components.essential.bridge.armoured_s,
+            explorer: components.essential.bridge.explorer,
+            combat: components.essential.bridge.combat
         },
         gellar: {
         },
