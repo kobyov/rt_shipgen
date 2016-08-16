@@ -104,7 +104,8 @@ components.essential = {
         lathe1: new Component("lathe1", "Lathe-pattern Class 1 Drive", "drive", 40, 12),
         lathe2b: new Component("lathe2b", "Lathe-pattern Class 2b Escord Drive", "drive", 47, 15),
         segrazian: new Component("segrazian", "Segrazian Viperdrive Pirate Engine", "drive", 45, 16),
-        jovian2: new Component("jovian2", "Jovian-pattern Class 2 Drive", "drive", 45, 10)
+        jovian2: new Component("jovian2", "Jovian-pattern Class 2 Drive", "drive", 45, 10),
+        jovian81: new Component("jovian81", "Jovian-pattern Class 8.1 Drive", "drive", 44, 11)
     },
     warp: {
         miroslav: new Component("miroslav", "Miroslav G-616.b Warp Engine", "warp", 8, 10),
@@ -241,21 +242,23 @@ components.raider = {
 components.frigate = {
     essential : {
         drive: {
+            lathe2b: components.essential.drive.lathe2b,
+            segrazian: components.essential.drive.segrazian,
+            jovian2: components.essential.drive.jovian2,
+            jovian81: components.essential.drive.jovian81
         },
-        warp: {
-        },
-        bridge: {
-        },
+        warp: components.transport.essential.warp,
+        bridge: components.raider.essential.bridge,
         gellar: {
+            belecane: components.essential.gellar.belecane,
+            emergency: components.essential.gellar.emergency,
+            standard: components.essential.gellar.standard,
+            warpsbane: components.essential.gellar.warpsbane
         },
-        sustainer: {
-        },
-        shield: {
-        },
-        quarters: {
-        },
-        auger: {
-        }
+        sustainer: components.transport.essential.sustainer,
+        shield: components.transport.essential.shield,
+        quarters: components.transport.essential.quarters,
+        auger: components.transport.essential.auger
     }
 };
 
@@ -275,8 +278,7 @@ components.lightcruiser = {
         },
         quarters: {
         },
-        auger: {
-        }
+        auger: components.transport.essential.auger
     }
 };
 
@@ -296,8 +298,7 @@ components.cruiser = {
         },
         quarters: {
         },
-        auger: {
-        }
+        auger: components.transport.essential.auger
     }
 };
 
@@ -317,8 +318,7 @@ components.grandcruiser = {
         },
         quarters: {
         },
-        auger: {
-        }
+        auger: components.transport.essential.auger
     }
 };
 
@@ -338,8 +338,7 @@ components.battlecruiser = {
         },
         quarters: {
         },
-        auger: {
-        }
+        auger: components.transport.essential.auger
     }
 };
 
