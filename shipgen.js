@@ -105,7 +105,10 @@ components.essential = {
         lathe2b: new Component("lathe2b", "Lathe-pattern Class 2b Escord Drive", "drive", 47, 15),
         segrazian: new Component("segrazian", "Segrazian Viperdrive Pirate Engine", "drive", 45, 16),
         jovian2: new Component("jovian2", "Jovian-pattern Class 2 Drive", "drive", 45, 10),
-        jovian81: new Component("jovian81", "Jovian-pattern Class 8.1 Drive", "drive", 44, 11)
+        jovian81: new Component("jovian81", "Jovian-pattern Class 8.1 Drive", "drive", 44, 11),
+        jovian82: new Component("jovian82", "Jovian-pattern Class 8.2 Drive", "drive", 59, 13),
+        jovianw: new Component("jovianw", "Jovian-pattern Warcruiser Drive", "drive", 65, 14),
+        jovian3: new Component("jovian3", "Jovian-pattern Class 3 Drive", "drive", 60, 12)
     },
     warp: {
         miroslav: new Component("miroslav", "Miroslav G-616.b Warp Engine", "warp", 8, 10),
@@ -265,6 +268,9 @@ components.frigate = {
 components.lightcruiser = {
     essential : {
         drive: {
+            jovian82: components.essential.drive.jovian82,
+            jovianw: components.essential.drive.jovianw,
+            jovian3: components.essential.drive.jovian3
         },
         warp: {
         },
