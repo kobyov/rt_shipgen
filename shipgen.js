@@ -86,7 +86,18 @@ var hulls = {
     battlecruiser: battlecruisers
 };
 
-var transport_essentials = {
+var components = {
+    essential: null,
+    transport: null,
+    raider: null,
+    frigate: null,
+    lightcruiser: null,
+    cruiser: null,
+    grandcruiser: null,
+    battlecruiser: null
+};
+
+components.essential = {
     drive: {
         lathe2a: new Component("lathe2a", "Lathe-pattern Class 2a Drive", "drive", 40, 14),
         jovian1: new Component("jovian1", "Jovian-pattern Class 1 Drive", "drive", 35, 8),
@@ -142,42 +153,188 @@ var transport_essentials = {
     }
 };
 
-var raider_essentials = {
-
+components.transport = {
+    essential: {
+        drive: {
+            lathe2a: components.essential.drive.lathe2a,
+            jovian1: components.essential.drive.jovian1,
+            lathe1: components.essential.drive.lathe1
+        },
+        warp: {
+            miroslav: components.essential.warp.miroslav,
+            markov: components.essential.warp.markov,
+            albanov: components.essential.warp.albanov,
+            klenova: components.essential.warp.klenova,
+            strelov: components.essential.warp.strelov
+        },
+        bridge: {
+            smuggler: components.essential.bridge.smuggler,
+            commerce: components.essential.bridge.commerce,
+            explorer: components.essential.bridge.explorer,
+            combat: components.essential.bridge.combat
+        },
+        gellar: {
+            belecane: components.essential.gellar.belecane,
+            emergency: components.essential.gellar.emergency,
+            standard: components.essential.gellar.standard,
+            warpsbane: components.essential.gellar.warpsbane,
+            mezoa: components.essential.gellar.mezoa
+        },
+        sustainer: {
+            clemency: components.essential.sustainer.clemency,
+            euphoric: components.essential.sustainer.euphoric,
+            m1r: components.essential.sustainer.m1r,
+            vitae: components.essential.sustainer.vitae
+        },
+        shield: {
+            voss: components.essential.shield.voss,
+            repulsor: components.essential.shield.repulsor,
+            single: components.essential.shield.single
+        },
+        quarters: {
+            bilge: components.essential.quarters.bilge,
+            clan: components.essential.quarters.clan,
+            cold: components.essential.quarters.cold,
+            slave: components.essential.quarters.slave,
+            pressed: components.essential.quarters.pressed,
+            voidsmen: components.essential.quarters.voidsmen
+        },
+        auger: {
+            bg15: components.essential.auger.bg15,
+            x470: components.essential.auger.x470,
+            w240: components.essential.auger.w240,
+            m100: components.essential.auger.m100,
+            m201: components.essential.auger.m201,
+            r50: components.essential.auger.r50,
+            deep: components.essential.auger.deep
+        }
+    }
 };
 
-var frigate_essentials = {
-
+components.raider = {
+    essential : {
+        drive: {
+        },
+        warp: {
+        },
+        bridge: {
+        },
+        gellar: {
+        },
+        sustainer: {
+        },
+        shield: {
+        },
+        quarters: {
+        },
+        auger: {
+        }
+    }
 };
 
-var lightcruiser_essentials = {
-
+components.frigate = {
+    essential : {
+        drive: {
+        },
+        warp: {
+        },
+        bridge: {
+        },
+        gellar: {
+        },
+        sustainer: {
+        },
+        shield: {
+        },
+        quarters: {
+        },
+        auger: {
+        }
+    }
 };
 
-var cruiser_essentials = {
-
+components.lightcruiser = {
+    essential : {
+        drive: {
+        },
+        warp: {
+        },
+        bridge: {
+        },
+        gellar: {
+        },
+        sustainer: {
+        },
+        shield: {
+        },
+        quarters: {
+        },
+        auger: {
+        }
+    }
 };
 
-var grandcruiser_essentials = {
-
+components.cruiser = {
+    essential : {
+        drive: {
+        },
+        warp: {
+        },
+        bridge: {
+        },
+        gellar: {
+        },
+        sustainer: {
+        },
+        shield: {
+        },
+        quarters: {
+        },
+        auger: {
+        }
+    }
 };
 
-var battlecruiser_essentials = {
-
+components.grandcruiser = {
+    essential : {
+        drive: {
+        },
+        warp: {
+        },
+        bridge: {
+        },
+        gellar: {
+        },
+        sustainer: {
+        },
+        shield: {
+        },
+        quarters: {
+        },
+        auger: {
+        }
+    }
 };
 
-var essentials = {
-    transport: transport_essentials,
-    raider: raider_essentials,
-    frigate: frigate_essentials,
-    lightcruiser: lightcruiser_essentials,
-    cruiser: lightcruiser_essentials,
-    grandcruiser: grandcruiser_essentials,
-    battlecruiser: battlecruiser_essentials
-};
-
-var components = {
-    essential: essentials
+components.battlecruiser = {
+    essential : {
+        drive: {
+        },
+        warp: {
+        },
+        bridge: {
+        },
+        gellar: {
+        },
+        sustainer: {
+        },
+        shield: {
+        },
+        quarters: {
+        },
+        auger: {
+        }
+    }
 };
 
 var Ship = function (name, type, hull) {
@@ -210,11 +367,11 @@ var select_random = function (obj) {
 };
 
 var select_drive = function (type) {
-    return return_random(components.essential[type].drive);
+    return return_random(components[type].essential.drive);
 };
 
 var select_essential = function (ship_type, component_type, available_power, available_space) {
-    var component = return_random(components.essential[ship_type][component_type]);
+    var component = return_random(components[ship_type].essential[component_type]);
     if (component.power <= available_power && component.space <= available_space) {
         return component;
     } else {
@@ -240,32 +397,18 @@ var build_ship = function (requirements) {
     }
     var ship = new Ship(requirements.name, requirements.type, requirements.hull);
 
-    ship.essential.drive = select_drive(requirements.type);
-    ship.power_available += ship.essential.drive.power;
-    ship.space_available -= ship.essential.drive.space;
+    var component;
 
-    ship.essential.warp = select_essential(requirements.type, "warp", ship.power_available, ship.space_available);
-    ship.power_available -= ship.essential.warp.power;
-    ship.space_available -= ship.essential.warp.space;
-    ship.essential.bridge = select_essential(requirements.type, "bridge", ship.power_available, ship.space_available);
-    ship.power_available -= ship.essential.bridge.power;
-    ship.space_available -= ship.essential.bridge.space;
-    ship.essential.gellar = select_essential(requirements.type, "gellar", ship.power_available, ship.space_available);
-    ship.power_available -= ship.essential.gellar.power;
-    ship.space_available -= ship.essential.gellar.space;
-    ship.essential.sustainer = select_essential(requirements.type, "sustainer", ship.power_available, ship.space_available);
-    ship.power_available -= ship.essential.sustainer.power;
-    ship.space_available -= ship.essential.sustainer.space;
-    ship.essential.shield = select_essential(requirements.type, "shield", ship.power_available, ship.space_available);
-    ship.power_available -= ship.essential.shield.power;
-    ship.space_available -= ship.essential.shield.space;
-    ship.essential.quarters = select_essential(requirements.type, "quarters", ship.power_available, ship.space_available);
-    ship.power_available -= ship.essential.quarters.power;
-    ship.space_available -= ship.essential.quarters.space;
-    ship.essential.auger = select_essential(requirements.type, "auger", ship.power_available, ship.space_available);
-    ship.power_available -= ship.essential.auger.power;
-    ship.space_available -= ship.essential.auger.space;
-
+    for (component in ship.essential) {
+        if (component === "drive") {
+            ship.essential[component] = select_drive(requirements.type);
+            ship.power_available += ship.essential[component].power;
+        } else {
+            ship.essential[component] = select_essential(requirements.type, component, ship.power_available, ship.space_available);
+            ship.power_available -= ship.essential[component].power;
+        }
+        ship.space_available -= ship.essential[component].space;
+    }
     return ship;
 };
 
